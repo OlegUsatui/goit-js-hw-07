@@ -1,11 +1,11 @@
 const inputEl = document.querySelector('#validation-input');
 
-const length = inputEl.dataset.length;
+const length = Number(inputEl.dataset.length);
 
 inputEl.addEventListener('blur', (element) => {
-    const val = element.currentTarget.value;
+    const val = element.currentTarget.value.length;
 
-    if (val.length == length) {
+    if (val === length) {
         if (element.currentTarget.classList.contains('invalid')) {
             element.currentTarget.classList.remove('invalid')
         }
