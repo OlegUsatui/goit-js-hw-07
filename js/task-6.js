@@ -1,30 +1,42 @@
-const customer = {
-  username: "Mango",
-  balance: 24000,
-  discount: 0.1,
-  orders: ["Burger", "Pizza", "Salad"],
-  // Change code below this line
-  getBalance() {
-    return this.balance;
-  },
-  getDiscount() {
-    return this.discount;
-  },
-  setDiscount(value) {
-    this.discount = value;
-  },
-  getOrders() {
-    return this.orders;
-  },
-  addOrder(cost, order) {
-    this.balance -= cost - cost * this.discount;
-    this.orders.push(order);
-  },
-  // Change code above this line
-};
+const controls = document.getElementById('controls');
+const createButton = controls.querySelector('button[data-create]');
+const destroyButton = controls.querySelector('button[data-destroy]');
+const inputEl = controls.querySelector('input');
+const boxes = document.getElementById('boxes');
 
-customer.setDiscount(0.15);
-console.log(customer.getDiscount()); // 0.15
-customer.addOrder(5000, "Steak");
-console.log(customer.getBalance()); // 19750
-console.log(customer.getOrders()); // ["Burger", "Pizza", "Salad", "Steak"]
+function getRandomHexColor() {
+  return `#${Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, 0)}`;
+}
+
+function createBoxes(amount) {
+  let itemSize = 30;
+
+  for (let i = 0; i <= amount; i++) {
+    const item = document.createElement('div');
+    item.style.backgroundColor = getRandomHexColor();
+    item.style.width = `${itemSize}px`;
+    item.style.height = `${itemSize}px`;
+
+    boxes.appendChild(item);
+
+    itemSize += 10;
+  }
+}
+
+function destroyBoxes() {
+  boxes.innerHTML = '';
+}
+
+createButton.addEventListener('click', (e) => {
+  if (Number(inputEl.value) >= 1 && Number(inputEl.value) <= 100) {
+    destroyBoxes();
+    createBoxes(inputEl.value);
+    inputEl.value = '';
+  }
+});
+
+destroyButton.addEventListener('click', (e) => {
+  destroyBoxes();
+});
